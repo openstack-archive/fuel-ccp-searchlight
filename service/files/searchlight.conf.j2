@@ -1,0 +1,97 @@
+[DEFAULT]
+use_syslog = false
+use_stderr = true
+debug = {{ searchlight.debug }}
+transport_url = rabbit://{{ rabbitmq.user }}:{{ rabbitmq.password }}@{{ address("rabbitmq") }}:{{ rabbitmq.port.cont }}/
+
+[api]
+bind_port = {{ searchlight.api_port.cont }}
+public_endpoint = {{ network_topology["private"]["address"] }}
+
+[service_credentials]
+auth_plugin = password
+username = {{ searchlight.user }}
+password = {{ searchlight.password }}
+tenant_name = service
+os_region_name = RegionOne
+auth_uri = {{ address('keystone', keystone.public_port, with_scheme=True) }}
+auth_url = {{ address('keystone', keystone.admin_port, with_scheme=True) }}
+
+[keystone_authtoken]
+auth_uri = http://{{ address("keystone") }}:{{ keystone.public_port.cont }}
+auth_url = http://{{ address("keystone") }}:{{ keystone.admin_port.cont }}
+auth_type = password
+project_domain_id = default
+user_domain_id = default
+project_name = {{ openstack.project_name }}
+username = {{ searchlight.user }}
+password = {{ searchlight.password }}
+memcached_servers = {{ address("memcached") }}:{{ memcached.port.cont }}
+
+[paste_deploy]
+flavor = keystone
+
+[oslo_concurrency]
+lock_path = /var/lib/searchlight/temp
+
+[listener]
+notifications_pool = searchlight
+
+[resource_plugin]
+resource_group_name = searchlight
+
+[service_credentials:nova]
+compute_api_version = 2.1
+
+[resource_plugin:os_nova_server]
+enabled = True
+admin_only_fields = OS-EXT-SRV*,OS-EXT-STS:vm_state
+
+[resource_plugin:os_nova_hypervisor]
+enabled = True
+
+[resource_plugin:os_nova_flavor]
+enabled = True
+
+[resource_plugin:os_nova_servergroup]
+enabled = False
+
+[resource_plugin:os_glance_image]
+enabled = True
+
+[resource_plugin:os_glance_metadef]
+enabled = True
+
+[resource_plugin:os_cinder_volume]
+enabled = True
+
+[resource_plugin:os_cinder_snapshot]
+enabled = True
+
+[resource_plugin:os_neutron_net]
+enabled = True
+admin_only_fields=admin_state_up,status
+
+[resource_plugin:os_neutron_port]
+enabled = True
+
+[resource_plugin:os_neutron_security_group]
+enabled = True
+
+[resource_plugin:os_designate_zone]
+enabled = False
+
+[resource_plugin:os_designate_recordset]
+enabled = False
+
+[resource_plugin:os_swift_account]
+enabled = False
+
+[resource_plugin:os_swift_container]
+enabled = False
+
+[resource_plugin:os_swift_object]
+enabled = False
+
+[elasticsearch]
+hosts = [elasticsearch]
