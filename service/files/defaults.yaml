@@ -1,0 +1,15 @@
+configs:
+  searchlight:
+    api_port:
+      cont: 9393
+      ingress: search
+
+    debug: false
+
+    user: searchlight
+    password: password
+
+sources:
+  openstack/searchlight:
+    git_url: https://git.openstack.org/openstack/searchlight.git
+    git_ref: stable/newton
