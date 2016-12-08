@@ -1,0 +1,23 @@
+dsl_version: 0.1.0
+service:
+  name: searchlight-listener
+  containers:
+    - name: searchlight-listener
+      image: searchlight-listener
+      # TODO(prazumovsky): add probes
+      probes:
+        readiness: "true"
+        liveness:
+          command: "true"
+          type: "exec"
+      daemon:
+        dependencies:
+          - searchlight-api
+        files:
+          - searchlight-conf
+        command: searchlight-listener --config-file /etc/searchlight/searchlight.conf
+
+files:
+  searchlight-conf:
+    path: /etc/searchlight/searchlight.conf
+    content: searchlight.conf.j2
