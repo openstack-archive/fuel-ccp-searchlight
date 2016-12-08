@@ -1,0 +1,10 @@
+FROM {{ image_spec("openstack-base") }}
+MAINTAINER {{ maintainer }}
+
+{{ copy_sources("openstack/searchlight", "/searchlight") }}
+
+RUN useradd --user-group searchlight \
+    && /var/lib/microservices/venv/bin/pip install --upgrade /searchlight \
+    && mkdir -p /var/lib/searchlight /etc/searchlight \
+    && cp -r /searchlight/etc/* /etc/searchlight/ \
+    && chown -R searchlight:searchlight /etc/searchlight /var/lib/searchlight
