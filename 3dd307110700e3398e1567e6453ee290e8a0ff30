@@ -1,0 +1,8 @@
+Code-Review+2: Sergey Lukjanov <slukjanov@mirantis.com>
+Workflow+1: Sergey Lukjanov <slukjanov@mirantis.com>
+Verified+2: Jenkins
+Submitted-by: Jenkins
+Submitted-at: Tue, 13 Dec 2016 09:36:57 +0000
+Reviewed-on: https://review.openstack.org/409090
+Project: openstack/fuel-ccp-searchlight
+Branch: refs/heads/master
