@@ -4,12 +4,6 @@ service:
   containers:
     - name: searchlight-listener
       image: searchlight-listener
-      # TODO(prazumovsky): add probes
-      probes:
-        readiness: "true"
-        liveness:
-          command: "true"
-          type: "exec"
       daemon:
         dependencies:
           - searchlight-api
