@@ -29,19 +29,19 @@ service:
           command: searchlight-manage --config-file /etc/searchlight/searchlight.conf index sync --force
         - name: searchlight-user-create
           dependencies:
-            - keystone-create-project
+            - keystone-create-domain
           type: single
-          command: openstack user create --domain default --password {{ searchlight.password }} {{ searchlight.user }}
+          command: openstack user create --domain {{ service_account.domain }} --password {{ searchlight.password }} {{ searchlight.user }}
 
         - name: searchlight-admin-role-add
           dependencies:
             - searchlight-user-create
           type: single
-          command: openstack role add --project service --user {{ searchlight.user }} admin
+          command: openstack role add --domain {{ service_account.domain }} --user {{ searchlight.user }} admin
 
         - name: searchlight-service-create
           dependencies:
-            - keystone-create-project
+            - keystone
           type: single
           command: openstack service create --name searchlight --description "Searchlight Service" search
 
