@@ -8,10 +8,9 @@ configs:
     password: password
     notification_driver: messagingv2
     services:
-      # enable only services from fuel-ccp/etc/topology-example.yaml by default
-      nova: true
-      neutron: true
-      glance: true
+      nova: false
+      neutron: false
+      glance: false
       cinder: false
       # do not enable this service until it has no ccp plugin
       swift: false
