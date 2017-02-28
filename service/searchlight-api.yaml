@@ -49,19 +49,19 @@ service:
           dependencies:
             - searchlight-service-create
           type: single
-          command: openstack endpoint create --region RegionOne search public {{ address('searchlight-api', searchlight.api_port, external=True, with_scheme=True) }}
+          command: openstack endpoint create --region RegionOne search public {{ address('searchlight-api', searchlight.api_port, external=True, with_scheme=True) }}/
 
         - name: searchlight-internal-endpoint-create
           dependencies:
             - searchlight-service-create
           type: single
-          command: openstack endpoint create --region RegionOne search internal {{ address('searchlight-api', searchlight.api_port, with_scheme=True) }}
+          command: openstack endpoint create --region RegionOne search internal {{ address('searchlight-api', searchlight.api_port, with_scheme=True) }}/
 
         - name: searchlight-admin-endpoint-create
           dependencies:
             - searchlight-service-create
           type: single
-          command: openstack endpoint create --region RegionOne search admin {{ address('searchlight-api', searchlight.api_port, with_scheme=True) }}
+          command: openstack endpoint create --region RegionOne search admin {{ address('searchlight-api', searchlight.api_port, with_scheme=True) }}/
       daemon:
         dependencies:
           - rabbitmq
