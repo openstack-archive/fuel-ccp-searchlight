@@ -4,8 +4,6 @@ configs:
       cont: 9393
       ingress: search
     debug: false
-    user: searchlight
-    password: password
     notification_driver: messagingv2
     services:
       nova: false
@@ -14,6 +12,11 @@ configs:
       cinder: false
       # do not enable this service until it has no ccp plugin
       swift: false
+
+secret_configs:
+  searchlight:
+    user: searchlight
+    password: password
 
 sources:
   openstack/searchlight:
